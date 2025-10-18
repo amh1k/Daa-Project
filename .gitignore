@@ -1,0 +1,35 @@
+# IDE and editor files
+.vscode/
+.claude/
+.idea/
+
+# Compiled executables
+*.exe
+*.out
+*.o
+
+# Build directories
+q2/ui/.next/
+q2/ui/node_modules/
+q2/ui/build/
+
+# Environment files
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+dev.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Books and PDFs (large files)
+Books/
+*.pdf
+
+# Temporary files
+temp.*
+nul
