@@ -227,7 +227,7 @@ export default function IntegerMultiplicationPage() {
             <Card className="h-[400px] flex items-center justify-center">
               <div className="text-center text-muted-foreground">
                 <Play className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Select a test file and click "Run Algorithm" to see the results</p>
+                <p>Select a test file and click &quot;Run Algorithm&quot; to see the results</p>
               </div>
             </Card>
           )}

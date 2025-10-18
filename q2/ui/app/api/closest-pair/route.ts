@@ -15,7 +15,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Paths relative to the Next.js project root
-    const projectRoot = path.join(process.cwd(), '../..')
+    // process.cwd() is the 'ui' folder, so '../' goes to 'q2' folder
+    const projectRoot = path.join(process.cwd(), '..')
     const exePath = path.join(projectRoot, 'closest_pair.exe')
     const testFilePath = path.join(projectRoot, 'test_data', 'closest_pair', testFile)
 

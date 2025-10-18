@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -49,15 +50,71 @@ const item = {
 }
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return (
+      <div className="container py-10">
+        <div className="text-center mb-12 px-4">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent pb-2">
+            DAA Algorithm Visualizer
+          </h1>
+          <p className="text-xl text-muted-foreground mb-2">
+            Divide and Conquer Algorithms Visualization
+          </p>
+          <p className="text-sm text-muted-foreground">
+            CS302 - Design and Analysis of Algorithms Project
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+          {algorithmCards.map((algo) => (
+            <Card key={algo.title} className="group hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/50 h-full">
+              <CardHeader>
+                <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${algo.gradient} flex items-center justify-center mb-4`}>
+                  <algo.icon className="w-6 h-6 text-white" />
+                </div>
+                <CardTitle className="text-xl mb-2">{algo.title}</CardTitle>
+                <CardDescription className="text-sm">
+                  {algo.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between py-2 px-3 bg-muted rounded-lg">
+                  <span className="text-sm font-medium">Complexity:</span>
+                  <code className="text-sm font-mono bg-primary/10 px-2 py-1 rounded">
+                    {algo.complexity}
+                  </code>
+                </div>
+                <Link href={algo.href}>
+                  <Button
+                    className="w-full"
+                    variant="outline"
+                  >
+                    Try It Out
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="container py-10">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center mb-12"
+        className="text-center mb-12 px-4"
       >
-        <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent pb-2">
           DAA Algorithm Visualizer
         </h1>
         <p className="text-xl text-muted-foreground mb-2">
@@ -116,6 +173,11 @@ export default function Home() {
         <Card className="max-w-3xl mx-auto">
           <CardHeader>
             <CardTitle>About This Project</CardTitle>
+            <CardDescription>
+              <span className="text-xs px-2 py-1 bg-primary/10 rounded-full">
+                Team: Huzaifa Abdul Rehman, Abdul Moiz Hossain, Ajay Kumar
+              </span>
+            </CardDescription>
           </CardHeader>
           <CardContent className="text-left space-y-4">
             <p className="text-muted-foreground">
