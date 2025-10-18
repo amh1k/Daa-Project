@@ -33,3 +33,10 @@ Books/
 # Temporary files
 temp.*
 nul
+
+# Also ignore these at repo root
+node_modules/
+.next/
+build/
+dist/
+coverage/

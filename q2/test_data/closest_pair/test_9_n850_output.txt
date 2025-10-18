@@ -1,0 +1,3 @@
+Points: 850
+Distance: 2.88193
+Time: 5.3273 ms
