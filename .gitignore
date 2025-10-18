@@ -1,0 +1,39 @@
+# Executables
+*.exe
+*.out
+*.app
+
+# Object files
+*.o
+*.obj
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled files without extension (common in Unix/Linux)
+c
+tempCodeRunnerFile
+
+# VS Code
+.vscode/
+
+# Temporary files
+*.tmp
+*~
+*.swp
+*.swo
+
+# Build directories
+build/
+bin/
+obj/
