@@ -97,13 +97,37 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Try to read tree JSON if it exists
+    const treeFilePath = testFilePath.replace('.txt', '_tree.json')
+    let tree = null
+    let treeDepth = 0
+
+    if (fs.existsSync(treeFilePath)) {
+      try {
+        const treeContent = fs.readFileSync(treeFilePath, 'utf-8')
+        tree = JSON.parse(treeContent)
+
+        // Calculate max depth
+        const getMaxDepth = (node: any): number => {
+          if (!node.children || node.children.length === 0) return node.depth
+          return Math.max(...node.children.map(getMaxDepth))
+        }
+        treeDepth = getMaxDepth(tree)
+      } catch (e) {
+        // Tree parsing failed, continue without tree
+        console.log('Tree parsing failed:', e)
+      }
+    }
+
     return NextResponse.json({
       success: true,
       num1Digits: parseInt(digitsMatch[1]),
       num2Digits: parseInt(digitsMatch[2]),
       productDigits: parseInt(lengthMatch[1]),
       product: fullProduct,
-      executionTime: parseFloat(timeMatch[1])
+      executionTime: parseFloat(timeMatch[1]),
+      tree: tree,
+      treeDepth: treeDepth
     })
 
   } catch (error: any) {

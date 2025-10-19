@@ -1,3 +1,3 @@
 Points: 300
 Distance: 6.11031
-Time: 1.9678 ms
+Time: 1.6209 ms

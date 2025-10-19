@@ -7,7 +7,24 @@ import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { formatNumber, formatTime, truncateString } from "@/lib/utils"
-import { Play, Loader2, AlertCircle, CheckCircle2, Hash } from "lucide-react"
+import { Play, Loader2, AlertCircle, CheckCircle2, Hash, Network } from "lucide-react"
+import { RecursiveTree } from "@/components/recursive-tree"
+import { FileUpload } from "@/components/file-upload"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ManualNumberInput } from "@/components/manual-number-input"
+
+interface TreeNode {
+  id: number
+  type: string
+  depth: number
+  x: string
+  y: string
+  result: string
+  xDigits: number
+  yDigits: number
+  resultDigits: number
+  children: TreeNode[]
+}
 
 interface Result {
   num1Digits: number
@@ -15,43 +32,85 @@ interface Result {
   productDigits: number
   product: string
   executionTime: number
+  tree?: TreeNode | null
+  treeDepth?: number
 }
 
 const testFiles = [
-  { value: "test_1_d100.txt", label: "Test 1 (100 digits)" },
-  { value: "test_2_d150.txt", label: "Test 2 (150 digits)" },
-  { value: "test_3_d200.txt", label: "Test 3 (200 digits)" },
-  { value: "test_4_d250.txt", label: "Test 4 (250 digits)" },
-  { value: "test_5_d300.txt", label: "Test 5 (300 digits)" },
-  { value: "test_6_d400.txt", label: "Test 6 (400 digits)" },
-  { value: "test_7_d500.txt", label: "Test 7 (500 digits)" },
-  { value: "test_8_d600.txt", label: "Test 8 (600 digits)" },
-  { value: "test_9_d800.txt", label: "Test 9 (800 digits)" },
-  { value: "test_10_d1000.txt", label: "Test 10 (1000 digits)" },
+  { value: "test_demo_d12.txt", label: "Demo (12 digits) - With Tree", category: "small" },
+  { value: "test_small_d20.txt", label: "Small (20 digits) - With Tree", category: "small" },
+  { value: "test_demo_d24.txt", label: "Demo (24 digits) - With Tree", category: "small" },
+  { value: "test_small_d30.txt", label: "Small (30 digits) - With Tree", category: "small" },
+  { value: "test_1_d100.txt", label: "Test 1 (100 digits)", category: "large" },
+  { value: "test_2_d150.txt", label: "Test 2 (150 digits)", category: "large" },
+  { value: "test_3_d200.txt", label: "Test 3 (200 digits)", category: "large" },
+  { value: "test_4_d250.txt", label: "Test 4 (250 digits)", category: "large" },
+  { value: "test_5_d300.txt", label: "Test 5 (300 digits)", category: "large" },
+  { value: "test_6_d400.txt", label: "Test 6 (400 digits)", category: "large" },
+  { value: "test_7_d500.txt", label: "Test 7 (500 digits)", category: "large" },
+  { value: "test_8_d600.txt", label: "Test 8 (600 digits)", category: "large" },
+  { value: "test_9_d800.txt", label: "Test 9 (800 digits)", category: "large" },
+  { value: "test_10_d1000.txt", label: "Test 10 (1000 digits)", category: "large" },
 ]
 
 export default function IntegerMultiplicationPage() {
   const [selectedFile, setSelectedFile] = useState<string>("")
+  const [customFileContent, setCustomFileContent] = useState<string>("")
+  const [customFileName, setCustomFileName] = useState<string>("")
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<Result | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [inputMode, setInputMode] = useState<"predefined" | "custom" | "manual">("predefined")
+  const [manualInputContent, setManualInputContent] = useState<string>("")
+
+  const handleFileUpload = (fileName: string, content: string) => {
+    setCustomFileName(fileName)
+    setCustomFileContent(content)
+    setSelectedFile("") // Clear predefined selection
+    setManualInputContent("") // Clear manual input
+  }
+
+  const handleManualInput = (content: string) => {
+    setManualInputContent(content)
+    setSelectedFile("") // Clear predefined selection
+    setCustomFileContent("") // Clear file upload
+    setCustomFileName("")
+  }
 
   const handleRun = async () => {
-    if (!selectedFile) {
-      setError("Please select a test file")
-      return
-    }
-
     setLoading(true)
     setError(null)
     setResult(null)
 
     try {
-      const response = await fetch("/api/integer-multiplication", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ testFile: selectedFile }),
-      })
+      let response
+
+      if (inputMode === "manual" && manualInputContent) {
+        // Use manual input API
+        response = await fetch("/api/integer-multiplication-custom", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fileContent: manualInputContent }),
+        })
+      } else if (inputMode === "custom" && customFileContent) {
+        // Use custom file API
+        response = await fetch("/api/integer-multiplication-custom", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fileContent: customFileContent }),
+        })
+      } else if (inputMode === "predefined" && selectedFile) {
+        // Use predefined file API
+        response = await fetch("/api/integer-multiplication", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ testFile: selectedFile }),
+        })
+      } else {
+        setError("Please provide input data")
+        setLoading(false)
+        return
+      }
 
       if (!response.ok) {
         throw new Error(`Failed to run algorithm: ${response.statusText}`)
@@ -83,26 +142,49 @@ export default function IntegerMultiplicationPage() {
         <div className="lg:col-span-1 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Select Test File</CardTitle>
-              <CardDescription>Choose from 10 pre-generated test files</CardDescription>
+              <CardTitle>Select Input</CardTitle>
+              <CardDescription>Choose a predefined test file or upload your own</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Select value={selectedFile} onValueChange={setSelectedFile}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a test file" />
-                </SelectTrigger>
-                <SelectContent>
-                  {testFiles.map((file) => (
-                    <SelectItem key={file.value} value={file.value}>
-                      {file.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Tabs value={inputMode} onValueChange={(v) => setInputMode(v as "predefined" | "custom" | "manual")}>
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="predefined">Files</TabsTrigger>
+                  <TabsTrigger value="custom">Upload</TabsTrigger>
+                  <TabsTrigger value="manual">Manual</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="predefined" className="space-y-4">
+                  <Select value={selectedFile} onValueChange={setSelectedFile}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a test file" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {testFiles.map((file) => (
+                        <SelectItem key={file.value} value={file.value}>
+                          {file.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </TabsContent>
+
+                <TabsContent value="custom" className="space-y-4">
+                  <FileUpload onFileSelect={handleFileUpload} />
+                  {customFileName && (
+                    <p className="text-sm text-muted-foreground">
+                      Selected: {customFileName}
+                    </p>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="manual" className="space-y-4">
+                  <ManualNumberInput onGenerate={handleManualInput} />
+                </TabsContent>
+              </Tabs>
 
               <Button
                 onClick={handleRun}
-                disabled={loading || !selectedFile}
+                disabled={loading || (inputMode === "predefined" && !selectedFile) || (inputMode === "custom" && !customFileContent) || (inputMode === "manual" && !manualInputContent)}
                 className="w-full"
                 size="lg"
               >
@@ -222,6 +304,43 @@ export default function IntegerMultiplicationPage() {
                   </div>
                 </CardContent>
               </Card>
+
+              {result.tree && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Network className="h-5 w-5" />
+                        Recursive Breakdown Visualization
+                      </CardTitle>
+                      <CardDescription>
+                        Interactive tree showing how Karatsuba divides the problem into smaller subproblems
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <RecursiveTree tree={result.tree} maxDepth={result.treeDepth || 0} />
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )}
+
+              {!result.tree && result.num1Digits > 50 && (
+                <Card className="border-dashed">
+                  <CardContent className="py-6 text-center text-muted-foreground">
+                    <Network className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                    <p className="text-sm">
+                      Tree visualization available for inputs ≤50 digits
+                    </p>
+                    <p className="text-xs mt-1">
+                      Current input: {result.num1Digits} digits
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
             </motion.div>
           ) : (
             <Card className="h-[400px] flex items-center justify-center">

@@ -1,0 +1,169 @@
+{
+  "id": 0,
+  "type": "root",
+  "depth": 0,
+  "x": "12345678...78901234",
+  "y": "98765432...32109876",
+  "result": "12193263...39986984",
+  "xDigits": 24,
+  "yDigits": 24,
+  "resultDigits": 48,
+  "children": [
+    {
+      "id": 1,
+      "type": "z2",
+      "depth": 1,
+      "x": "123456789012",
+      "y": "987654321098",
+      "result": "12193263...86175176",
+      "xDigits": 12,
+      "yDigits": 12,
+      "resultDigits": 24,
+      "children": [
+        {
+          "id": 4,
+          "type": "z2",
+          "depth": 2,
+          "x": "123456",
+          "y": "987654",
+          "result": "121931812224",
+          "xDigits": 6,
+          "yDigits": 6,
+          "resultDigits": 12,
+          "children": [
+          ]
+        },
+        {
+          "id": 5,
+          "type": "z0",
+          "depth": 2,
+          "x": "789012",
+          "y": "321098",
+          "result": "253350175176",
+          "xDigits": 6,
+          "yDigits": 6,
+          "resultDigits": 12,
+          "children": [
+          ]
+        },
+        {
+          "id": 6,
+          "type": "z1",
+          "depth": 2,
+          "x": "912468",
+          "y": "1308752",
+          "result": "818912332536",
+          "xDigits": 6,
+          "yDigits": 7,
+          "resultDigits": 12,
+          "children": [
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "z0",
+      "depth": 1,
+      "x": "345678901234",
+      "y": "765432109876",
+      "result": "26459373...39986984",
+      "xDigits": 12,
+      "yDigits": 12,
+      "resultDigits": 24,
+      "children": [
+        {
+          "id": 7,
+          "type": "z2",
+          "depth": 2,
+          "x": "345678",
+          "y": "765432",
+          "result": "264593002896",
+          "xDigits": 6,
+          "yDigits": 6,
+          "resultDigits": 12,
+          "children": [
+          ]
+        },
+        {
+          "id": 8,
+          "type": "z0",
+          "depth": 2,
+          "x": "901234",
+          "y": "109876",
+          "result": "99023986984",
+          "xDigits": 6,
+          "yDigits": 6,
+          "resultDigits": 11,
+          "children": [
+          ]
+        },
+        {
+          "id": 9,
+          "type": "z1",
+          "depth": 2,
+          "x": "1246912",
+          "y": "875308",
+          "result": "727815059016",
+          "xDigits": 7,
+          "yDigits": 6,
+          "resultDigits": 12,
+          "children": [
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "z1",
+      "depth": 1,
+      "x": "469135690246",
+      "y": "1753086430974",
+      "result": "43590905...97917444",
+      "xDigits": 12,
+      "yDigits": 13,
+      "resultDigits": 24,
+      "children": [
+        {
+          "id": 10,
+          "type": "z2",
+          "depth": 2,
+          "x": "0469135",
+          "y": "1753086",
+          "result": "822434000610",
+          "xDigits": 7,
+          "yDigits": 7,
+          "resultDigits": 12,
+          "children": [
+          ]
+        },
+        {
+          "id": 11,
+          "type": "z0",
+          "depth": 2,
+          "x": "690246",
+          "y": "430974",
+          "result": "297478079604",
+          "xDigits": 6,
+          "yDigits": 6,
+          "resultDigits": 12,
+          "children": [
+          ]
+        },
+        {
+          "id": 12,
+          "type": "z1",
+          "depth": 2,
+          "x": "1159381",
+          "y": "2184060",
+          "result": "1412245586646",
+          "xDigits": 7,
+          "yDigits": 7,
+          "resultDigits": 13,
+          "children": [
+          ]
+        }
+      ]
+    }
+  ]
+}

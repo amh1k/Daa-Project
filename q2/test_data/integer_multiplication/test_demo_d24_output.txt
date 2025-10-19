@@ -1,0 +1,5 @@
+Num1: 24 digits
+Num2: 24 digits
+Product: 48 digits
+Time: 1.0497 ms
+Result: 121932631137021795226184404791648155158039986984

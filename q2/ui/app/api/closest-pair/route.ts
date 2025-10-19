@@ -73,6 +73,9 @@ export async function POST(req: NextRequest) {
     // P2: (-697.577, 558.027)
     // Distance: 4.74121
     // Time: 0.2915 ms
+    // (Optional) TRACE_START
+    // [trace json]
+    // TRACE_END
 
     const nMatch = lines[0]?.match(/n=(\d+)/)
     const p1Match = lines[1]?.match(/P1: \(([^,]+), ([^)]+)\)/)
@@ -88,6 +91,21 @@ export async function POST(req: NextRequest) {
     }
 
     const numPoints = parseInt(nMatch[1])
+
+    // Parse trace if available (for n <= 50)
+    let trace = null
+    const traceStartIdx = lines.findIndex(l => l === 'TRACE_START')
+    const traceEndIdx = lines.findIndex(l => l === 'TRACE_END')
+
+    if (traceStartIdx !== -1 && traceEndIdx !== -1 && traceEndIdx > traceStartIdx) {
+      try {
+        const traceJson = lines.slice(traceStartIdx + 1, traceEndIdx).join('')
+        trace = JSON.parse(traceJson)
+      } catch (e) {
+        console.error('Failed to parse trace JSON:', e)
+        // Continue without trace
+      }
+    }
 
     // Read all points from input file
     const fileContent = fs.readFileSync(testFilePath, 'utf-8')
@@ -111,7 +129,8 @@ export async function POST(req: NextRequest) {
         point2: { x: parseFloat(p2Match[1]), y: parseFloat(p2Match[2]) },
         distance: parseFloat(distMatch[1])
       },
-      executionTime: parseFloat(timeMatch[1])
+      executionTime: parseFloat(timeMatch[1]),
+      trace: trace || []
     })
 
   } catch (error: any) {

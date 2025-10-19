@@ -1,0 +1,52 @@
+{
+  "id": 0,
+  "type": "root",
+  "depth": 0,
+  "x": "123456789012",
+  "y": "987654321098",
+  "result": "12193263...86175176",
+  "xDigits": 12,
+  "yDigits": 12,
+  "resultDigits": 24,
+  "children": [
+    {
+      "id": 1,
+      "type": "z2",
+      "depth": 1,
+      "x": "123456",
+      "y": "987654",
+      "result": "121931812224",
+      "xDigits": 6,
+      "yDigits": 6,
+      "resultDigits": 12,
+      "children": [
+      ]
+    },
+    {
+      "id": 2,
+      "type": "z0",
+      "depth": 1,
+      "x": "789012",
+      "y": "321098",
+      "result": "253350175176",
+      "xDigits": 6,
+      "yDigits": 6,
+      "resultDigits": 12,
+      "children": [
+      ]
+    },
+    {
+      "id": 3,
+      "type": "z1",
+      "depth": 1,
+      "x": "912468",
+      "y": "1308752",
+      "result": "818912332536",
+      "xDigits": 6,
+      "yDigits": 7,
+      "resultDigits": 12,
+      "children": [
+      ]
+    }
+  ]
+}

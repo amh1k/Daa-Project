@@ -4,7 +4,26 @@
 #include <string>
 #include <algorithm>
 #include <chrono>
+#include <vector>
+#include <sstream>
 using namespace std;
+
+int nodeId = 0;
+int maxDepth = 0;
+
+struct TreeNode {
+    int id;
+    string x, y, result;
+    int depth;
+    string type; // "z2", "z0", "z1", or "root"
+    vector<TreeNode*> children;
+
+    TreeNode(string _x, string _y, int _depth, string _type = "root")
+        : x(_x), y(_y), depth(_depth), type(_type) {
+        id = nodeId++;
+        if (depth > maxDepth) maxDepth = depth;
+    }
+};
 
 string trim(string s) {
     size_t p = s.find_first_not_of('0');
@@ -76,6 +95,68 @@ string karatsuba(string x, string y) {
     return add(add(shift(z2, 2*m), shift(z1, m)), z0);
 }
 
+string karatsubaWithTree(string x, string y, TreeNode* node) {
+    makeEqual(x, y);
+    int n = x.size();
+
+    if (n <= 10) {
+        node->result = naive(x, y);
+        return node->result;
+    }
+
+    int m = n/2;
+    string a = x.substr(0, n-m), b = x.substr(n-m);
+    string c = y.substr(0, n-m), d = y.substr(n-m);
+
+    // Create child nodes for z2, z0, z1
+    TreeNode* z2Node = new TreeNode(a, c, node->depth + 1, "z2");
+    TreeNode* z0Node = new TreeNode(b, d, node->depth + 1, "z0");
+    TreeNode* z1Node = new TreeNode(add(a,b), add(c,d), node->depth + 1, "z1");
+
+    node->children.push_back(z2Node);
+    node->children.push_back(z0Node);
+    node->children.push_back(z1Node);
+
+    string z2 = karatsubaWithTree(a, c, z2Node);
+    string z0 = karatsubaWithTree(b, d, z0Node);
+    string z1 = karatsubaWithTree(add(a,b), add(c,d), z1Node);
+    z1 = sub(sub(z1, z2), z0);
+    z1Node->result = z1; // Update z1 after subtraction
+
+    node->result = add(add(shift(z2, 2*m), shift(z1, m)), z0);
+    return node->result;
+}
+
+string truncate(string s, int maxLen = 20) {
+    if (s.size() <= maxLen) return s;
+    int half = maxLen / 2 - 2;
+    return s.substr(0, half) + "..." + s.substr(s.size() - half);
+}
+
+void treeToJson(TreeNode* node, ofstream& out, int indent = 0) {
+    string ind(indent, ' ');
+    out << ind << "{\n";
+    out << ind << "  \"id\": " << node->id << ",\n";
+    out << ind << "  \"type\": \"" << node->type << "\",\n";
+    out << ind << "  \"depth\": " << node->depth << ",\n";
+    out << ind << "  \"x\": \"" << truncate(node->x) << "\",\n";
+    out << ind << "  \"y\": \"" << truncate(node->y) << "\",\n";
+    out << ind << "  \"result\": \"" << truncate(node->result) << "\",\n";
+    out << ind << "  \"xDigits\": " << node->x.size() << ",\n";
+    out << ind << "  \"yDigits\": " << node->y.size() << ",\n";
+    out << ind << "  \"resultDigits\": " << node->result.size() << ",\n";
+    out << ind << "  \"children\": [\n";
+
+    for (size_t i = 0; i < node->children.size(); i++) {
+        treeToJson(node->children[i], out, indent + 4);
+        if (i < node->children.size() - 1) out << ",\n";
+        else out << "\n";
+    }
+
+    out << ind << "  ]\n";
+    out << ind << "}";
+}
+
 int main(int argc, char* argv[]) {
     string file = (argc > 1) ? argv[1] : "test_data/integer_multiplication/test_1_d100.txt";
 
@@ -88,6 +169,7 @@ int main(int argc, char* argv[]) {
     num1 = trim(num1);
     num2 = trim(num2);
 
+    // Regular execution for timing
     auto start = chrono::high_resolution_clock::now();
     string res = karatsuba(num1, num2);
     auto end = chrono::high_resolution_clock::now();
@@ -99,13 +181,34 @@ int main(int argc, char* argv[]) {
     else cout << "Product: " << res.substr(0, 50) << "..." << res.substr(res.size()-50) << "\n";
     cout << "Time: " << time_ms << " ms\n";
 
-    ofstream out(file.substr(0, file.find_last_of('.')) + "_output.txt");
+    // Generate tree visualization for smaller inputs (to keep tree manageable)
+    TreeNode* root = nullptr;
+    if (num1.size() <= 50) {
+        nodeId = 0;
+        maxDepth = 0;
+        root = new TreeNode(num1, num2, 0, "root");
+        karatsubaWithTree(num1, num2, root);
+        cout << "Tree depth: " << maxDepth << "\n";
+        cout << "Tree nodes: " << nodeId << "\n";
+    }
+
+    // Write output files
+    string baseFile = file.substr(0, file.find_last_of('.'));
+
+    ofstream out(baseFile + "_output.txt");
     out << "Num1: " << num1.size() << " digits\n";
     out << "Num2: " << num2.size() << " digits\n";
     out << "Product: " << res.size() << " digits\n";
     out << "Time: " << time_ms << " ms\n";
     out << "Result: " << res << "\n";
     out.close();
+
+    // Write tree JSON if generated
+    if (root) {
+        ofstream treeOut(baseFile + "_tree.json");
+        treeToJson(root, treeOut);
+        treeOut.close();
+    }
 
     return 0;
 }
