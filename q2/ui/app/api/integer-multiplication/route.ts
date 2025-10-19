@@ -38,7 +38,19 @@ export async function POST(req: NextRequest) {
 
     // Execute C++ program
     const command = `"${exePath}" "${testFilePath}"`
-    const { stdout, stderr } = await execPromise(command, { timeout: 60000 })
+    let stdout, stderr
+
+    try {
+      const result = await execPromise(command, { timeout: 60000 })
+      stdout = result.stdout
+      stderr = result.stderr
+    } catch (execError: any) {
+      return NextResponse.json({
+        error: 'Failed to execute integer multiplication algorithm',
+        details: execError.message,
+        command: command
+      }, { status: 500 })
+    }
 
     if (stderr && !stdout) {
       return NextResponse.json({ error: stderr }, { status: 500 })
@@ -46,6 +58,14 @@ export async function POST(req: NextRequest) {
 
     // Parse output
     const lines = stdout.split('\n').map(l => l.trim()).filter(Boolean)
+
+    if (lines.length < 4) {
+      return NextResponse.json({
+        error: 'Unexpected output format from executable',
+        output: stdout,
+        details: 'Expected at least 4 lines of output'
+      }, { status: 500 })
+    }
 
     // Expected format:
     // Integer Multiplication (d1=100, d2=100):

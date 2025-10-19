@@ -5,7 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatNumber(num: number): string {
+export function formatNumber(num: number | undefined | null): string {
+  if (num === undefined || num === null || isNaN(num)) return '0'
   return num.toLocaleString('en-US')
 }
 
