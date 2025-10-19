@@ -530,4 +530,3 @@ This project is created for educational purposes as part of the Design and Analy
 ---
 
 **Repository**: https://github.com/amh1k/Daa-Project
-**Documentation**: See `INSTRUCTIONS.md` for quick setup guide
