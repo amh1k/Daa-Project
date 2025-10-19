@@ -28,7 +28,10 @@ Thumbs.db
 
 # Books and PDFs (large files)
 Books/
-*.pdf
+Books/*.pdf
+# Allow project documentation PDFs in root
+!/*.pdf
+!docs/*.pdf
 
 # Temporary files
 temp.*
