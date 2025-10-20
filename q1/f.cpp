@@ -20,7 +20,7 @@ int findPeak(vector<int> &arr, int start, int end)
 }
 int main()
 {
-    vector<int> arr = {1, 3, 5, 7, 6, 4, 2};
+    vector<int> arr = {1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1};
     int peakIndex = findPeak(arr, 0, arr.size() - 1);
     cout << "Peak element is " << arr[peakIndex] << " at index " << peakIndex << endl;
     return 0;

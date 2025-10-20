@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// This functions finds the max crossing sum
 int maxCrossSum(vector<int> &arr, int start, int mid, int end)
 {
     int leftSum = INT_MIN;
@@ -16,18 +15,15 @@ int maxCrossSum(vector<int> &arr, int start, int mid, int end)
     int rightSum = INT_MIN;
     sum = 0;
 
-    // elemets to right of mid
     for (int i = mid + 1; i <= end; i++)
     {
         sum += arr[i];
         rightSum = max(rightSum, sum);
     }
 
-    // elements to left of mid
     return leftSum + rightSum;
 }
 
-// Function to find max subarray sum using Divide & Conquer
 int maxSubarraySum(vector<int> &arr, int start, int end)
 {
     if (start == end)
@@ -44,9 +40,8 @@ int maxSubarraySum(vector<int> &arr, int start, int end)
 
 int main()
 {
-    vector<int> prices = {100, 180, 260, 310, 40, 535, 695};
+    vector<int> prices = {100, 180, 260, 310, 40, 535, 695, 80, 20, 10};
 
-    // We first have to compute difference array of prices so that we can apply max sum subarray to this problem
     vector<int> diff;
     for (int i = 1; i < prices.size(); i++)
     {
