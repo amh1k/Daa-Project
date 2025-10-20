@@ -20,11 +20,13 @@
 using namespace std;
 
 // Function to find a local minimum in a complete binary tree
-int findLocalMinimum(const vector<int>& tree) {
+int findLocalMinimum(const vector<int> &tree)
+{
     int n = tree.size();
-    int index = 0;  // start from root
+    int index = 0; // start from root
 
-    while (true) {
+    while (true)
+    {
         int left = 2 * index + 1;
         int right = 2 * index + 2;
 
@@ -32,7 +34,8 @@ int findLocalMinimum(const vector<int>& tree) {
         int rightValue = (right < n) ? tree[right] : INT_MAX;
 
         // If current node is smaller than both children -> local minimum
-        if (tree[index] < leftValue && tree[index] < rightValue) {
+        if (tree[index] < leftValue && tree[index] < rightValue)
+        {
             return index;
         }
 
@@ -44,7 +47,8 @@ int findLocalMinimum(const vector<int>& tree) {
     }
 }
 
-int main() {
+int main()
+{
     // Example: complete binary tree stored in array
     vector<int> tree = {10, 5, 15, 3, 7, 12, 17, 1, 4};
 
