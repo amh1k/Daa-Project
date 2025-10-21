@@ -36,5 +36,7 @@ int main()
 
     cout << "Minimum element: " << result.first << endl;
     cout << "Maximum element: " << result.second << endl;
+    cout << "Recurrence: T(n) = 2T(n/2) + 2 ⇒ T(n) = (3n/2) − 2." << endl;
+    cout << "It performs about 25% fewer comparisons than the bruteforce (2n − 2) algorithm." << endl;
     return 0;
 }

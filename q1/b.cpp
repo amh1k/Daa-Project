@@ -15,5 +15,7 @@ int main()
     long long a, b;
     cin >> a >> b;
     cout << binpow(a, b) << endl;
+    cout << "(2) Recurrence: T(n) = T(n/2) + 1 ⇒ T(n) = O(log n)." << endl;
+    cout << "(3) It uses log n multiplications, which is much faster than the brute - force O(n) multiplications." << endl;
     return 0;
 }
