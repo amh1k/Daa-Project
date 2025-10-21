@@ -102,6 +102,39 @@ export default function Home() {
             </Card>
           ))}
         </div>
+
+        <div className="mt-16 text-center">
+          <Card className="max-w-3xl mx-auto">
+            <CardHeader>
+              <CardTitle>About This Project</CardTitle>
+              <CardDescription>
+                <span className="text-xs px-2 py-1 bg-primary/10 rounded-full">
+                  Team: Huzaifa Abdul Rehman, Abdul Moiz Hossain, Ajay Kumar
+                </span>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-left space-y-4">
+              <p className="text-muted-foreground">
+                This project demonstrates the implementation and visualization of two fundamental
+                divide-and-conquer algorithms:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                <li>
+                  <strong>Closest Pair of Points:</strong> Efficiently finds the two closest points
+                  in a 2D plane with O(n log n) time complexity.
+                </li>
+                <li>
+                  <strong>Integer Multiplication (Karatsuba):</strong> Multiplies large integers
+                  faster than traditional methods with O(n^1.585) complexity.
+                </li>
+              </ul>
+              <p className="text-muted-foreground">
+                Each algorithm includes interactive visualizations, performance metrics, and
+                the ability to test with various input sizes from 100 to 1000 elements.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     )
   }
