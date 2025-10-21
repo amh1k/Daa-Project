@@ -1,0 +1,6 @@
+In the best case of the quick sort algorithm when the pviot divides the array into roughly 2 halves
+at every partition. The tree has a height of logn and n comparisons are made at each level
+hence t.c is n* logn
+
+In the worst case pivot ends up being either the largest or smallest element. Meaning that the tree
+has a height of n and n comparisons are being made hence t.c is n^2
