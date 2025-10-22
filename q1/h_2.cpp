@@ -81,7 +81,13 @@ long long countSignificantInversions(vector<int> arr)
 int main()
 {
     cout << "=== Significant Inversions Counter ===" << endl;
-    cout << "A pair (i,j) is a significant inversion if i < j and arr[i] > 2*arr[j]" << endl;
+
+    cout << "ALGORITHM COMPLEXITY ANALYSIS:" << endl;
+    cout << "Recurrence Relation: T(n) = 2T(n/2) + O(n)" << endl;
+    cout << "  - 2T(n/2): Two recursive calls on half-sized arrays" << endl;
+    cout << "  - O(n): Counting cross inversions + merging" << endl;
+    cout << "Time Complexity: O(n log n)" << endl;
+    cout << "Space Complexity: O(n)" << endl;
     cout << endl;
 
     int n;
@@ -109,39 +115,4 @@ int main()
     return 0;
 }
 
-/*`
- * TIME COMPLEXITY ANALYSIS:
- *
- * Recurrence Relation: T(n) = 2T(n/2) + O(n)
- * - 2T(n/2): Two recursive calls on half-sized arraysp
- * - O(n): Counting cross inversions + merging
- *
- * Solution: T(n) = O(n log n) by Master Theorem
- *
- * SPACE COMPLEXITY: O(n) for temporary arrays during merging
- *
- *
- * TEST CASES:
- *
- * Test 1: [8, 4, 2, 1]
- * Expected: 3 inversions
- * - (0,2): 8 > 2*2=4
- * - (0,3): 8 > 2*1=2
- * - (1,3): 4 > 2*1=2
- *
- * Test 2: [10, 5, 2, 1]
- * Expected: 5 inversions
- * - (0,1): 10 > 2*5=10? No (equal)
- * - (0,2): 10 > 2*2=4? Yes
- * - (0,3): 10 > 2*1=2? Yes
- * - (1,2): 5 > 2*2=4? Yes
- * - (1,3): 5 > 2*1=2? Yes
- * - (2,3): 2 > 2*1=2? No
- * Total: 4 inversions
- *
- * Test 3: [1, 2, 3, 4, 5]
- * Expected: 0 inversions (sorted ascending)
- *
- * Test 4: [5, 4, 3, 2, 1]
- * Expected: Multiple inversions (sorted descending)
- */
+
