@@ -1,3 +1,10 @@
+/*
+Team Members:
+23k-0553 Abdul Moiz Hussain
+23k-0782 Huzaifa Abdul Rehman
+23k-0514 Ajay Kumar
+*/
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
