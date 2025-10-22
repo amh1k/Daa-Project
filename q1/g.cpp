@@ -50,6 +50,10 @@ int main()
 
     int maxProfit = maxSubarraySum(diff, 0, diff.size() - 1);
     cout << "Maximum Profit: " << maxProfit << endl;
+    cout << "\nRecurrence Relation: T(n) = 2T(n/2) + O(n)" << endl;
+    cout << "Time Complexity: O(n log n) - Divide-and-conquer approach" << endl;
+    cout << "The algorithm converts the problem to maximum subarray sum by computing" << endl;
+    cout << "price differences, then uses divide-and-conquer to find the best buy-sell period." << endl;
 
     return 0;
 }

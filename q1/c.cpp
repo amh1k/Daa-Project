@@ -71,5 +71,9 @@ int main()
     int cnt = noOfInversions(a, n);
     cout << "The number of inversions are: "
          << cnt << endl;
+    cout << "\nRecurrence Relation: T(n) = 2T(n/2) + O(n)" << endl;
+    cout << "Time Complexity: O(n log n) - Same as merge sort" << endl;
+    cout << "The algorithm counts inversions during the merge step by tracking" << endl;
+    cout << "how many elements from the right half are smaller than left half elements." << endl;
     return 0;
 }

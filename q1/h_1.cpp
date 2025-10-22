@@ -34,6 +34,10 @@ int main()
     sort(A.begin(), A.end());
     sort(B.begin(), B.end());
 
-    cout << findMedian(A, B, n) << endl;
+    cout << "Median of two sorted arrays: " << findMedian(A, B, n) << endl;
+    cout << "\nRecurrence Relation: T(n) = T(n/2) + O(1)" << endl;
+    cout << "Time Complexity: O(log n) - Binary search on the smaller array" << endl;
+    cout << "The algorithm uses binary search to partition both arrays such that" << endl;
+    cout << "elements on the left are smaller than elements on the right." << endl;
     return 0;
 }

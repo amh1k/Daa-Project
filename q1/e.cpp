@@ -36,6 +36,10 @@ int main()
     double minDistance = closestPairUtil(arr, 0, arr.size() - 1);
 
     cout << "Closest distance between any two numbers: " << minDistance << endl;
+    cout << "\nRecurrence Relation: T(n) = 2T(n/2) + O(1)" << endl;
+    cout << "Time Complexity: O(n log n) - O(n log n) for sorting + O(n) for divide-and-conquer" << endl;
+    cout << "The algorithm divides the sorted array and checks the minimum distance" << endl;
+    cout << "in left half, right half, and across the boundary (adjacent elements)." << endl;
 
     return 0;
 }
