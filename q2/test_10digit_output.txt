@@ -1,0 +1,5 @@
+Num1: 10 digits
+Num2: 10 digits
+Product: 20 digits
+Time: 0.0268 ms
+Result: 12193263111263526900

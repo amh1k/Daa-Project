@@ -122,7 +122,8 @@ Result stripClosest(vector<Point>& strip, double d, int depth, bool enableTrace)
 }
 
 Result closestRec(vector<Point>& pX, vector<Point>& pY, int l, int r, int depth, bool enableTrace) {
-    if (r - l <= 3) return bruteForce(pX, l, r, depth, enableTrace);
+    // Use brute force for 3 or fewer points
+    if (r - l <= 2) return bruteForce(pX, l, r, depth, enableTrace);
 
     int mid = l + (r-l)/2;
     Point midPt = pX[mid];
@@ -139,10 +140,14 @@ Result closestRec(vector<Point>& pX, vector<Point>& pY, int l, int r, int depth,
         trace.push_back(step);
     }
 
+    // Partition pY into left and right based on midpoint
     vector<Point> lY, rY;
     for (auto& p : pY) {
-        if (p.x <= midPt.x && lY.size() < (size_t)(mid-l+1)) lY.push_back(p);
-        else rY.push_back(p);
+        if (p.x <= midPt.x) {
+            lY.push_back(p);
+        } else {
+            rY.push_back(p);
+        }
     }
 
     // Trace left recursion
@@ -174,9 +179,14 @@ Result closestRec(vector<Point>& pX, vector<Point>& pY, int l, int r, int depth,
     Result rRes = closestRec(pX, rY, mid+1, r, depth + 1, enableTrace);
     Result res = (lRes.d < rRes.d) ? lRes : rRes;
 
+    // Build strip from current Y-sorted subarray only (not all points)
+    // Only include points within distance res.d from the dividing line
     vector<Point> strip;
-    for (auto& p : pY)
-        if (abs(p.x - midPt.x) < res.d) strip.push_back(p);
+    for (auto& p : pY) {
+        if (abs(p.x - midPt.x) < res.d) {
+            strip.push_back(p);
+        }
+    }
 
     Result stripRes = stripClosest(strip, res.d, depth, enableTrace);
     Result finalRes = (stripRes.d < res.d) ? stripRes : res;

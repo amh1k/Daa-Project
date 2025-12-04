@@ -1,0 +1,5 @@
+Num1: 11 digits
+Num2: 11 digits
+Product: 22 digits
+Time: 0.0478 ms
+Result: 1219326311336229232209

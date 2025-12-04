@@ -81,7 +81,7 @@ string naive(string a, string b) {
 string karatsuba(string x, string y) {
     makeEqual(x, y);
     int n = x.size();
-    if (n <= 10) return naive(x, y);
+    if (n < 10) return naive(x, y);
 
     int m = n/2;
     string a = x.substr(0, n-m), b = x.substr(n-m);
@@ -99,7 +99,7 @@ string karatsubaWithTree(string x, string y, TreeNode* node) {
     makeEqual(x, y);
     int n = x.size();
 
-    if (n <= 10) {
+    if (n < 10) {
         node->result = naive(x, y);
         return node->result;
     }

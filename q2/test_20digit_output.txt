@@ -1,5 +1,5 @@
 Num1: 20 digits
 Num2: 20 digits
 Product: 40 digits
-Time: 0.1638 ms
+Time: 0.1735 ms
 Result: 1219326311370217952237463801111263526900
