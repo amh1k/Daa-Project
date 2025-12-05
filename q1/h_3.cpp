@@ -1,3 +1,10 @@
+/*
+Team Members:
+23k-0553 Abdul Moiz Hussain
+23k-0782 Huzaifa Abdul Rehman
+23k-0514 Ajay Kumar
+*/
+
 #include <iostream>
 #include <vector>
 #include <climits>
@@ -25,14 +32,16 @@ int findLocalMinimum(const vector<int> &tree)
         int leftValue = INT_MAX;
         int rightValue = INT_MAX;
 
-        if (left < n) {
+        if (left < n)
+        {
             probeCount++;
             leftValue = tree[left];
             cout << "Probe " << probeCount << ": Left child (index " << left
                  << ") has value " << leftValue << endl;
         }
 
-        if (right < n) {
+        if (right < n)
+        {
             probeCount++;
             rightValue = tree[right];
             cout << "Probe " << probeCount << ": Right child (index " << right
@@ -47,12 +56,14 @@ int findLocalMinimum(const vector<int> &tree)
 
         if (leftValue < rightValue)
         {
-            cout << "Moving to left child (smaller value)\n" << endl;
+            cout << "Moving to left child (smaller value)\n"
+                 << endl;
             index = left;
         }
         else
         {
-            cout << "Moving to right child (smaller value)\n" << endl;
+            cout << "Moving to right child (smaller value)\n"
+                 << endl;
             index = right;
         }
     }
@@ -69,7 +80,8 @@ int main()
     vector<int> tree = {10, 5, 15, 3, 7, 12, 17, 1, 4};
 
     cout << "Tree (level-order): ";
-    for (int val : tree) cout << val << " ";
+    for (int val : tree)
+        cout << val << " ";
     cout << endl;
 
     int localMinIndex = findLocalMinimum(tree);

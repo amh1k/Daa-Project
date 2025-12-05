@@ -1,5 +1,5 @@
 Num1: 12 digits
 Num2: 12 digits
 Product: 24 digits
-Time: 0.1109 ms
+Time: 0.060521 ms
 Result: 121932631136585886175176
