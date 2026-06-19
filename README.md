@@ -18,6 +18,12 @@ pinned: false
 
 A comprehensive collection of divide-and-conquer algorithm implementations with **professional web-based visualizations** for the Design and Analysis of Algorithms course.
 
+## 🚀 Live Demo
+
+Try the deployed application here:
+
+**[DAA Algorithm Visualizer](https://amh1k-daa-algorithm-visualizer.hf.space)**
+
 ## 👥 Team Members
 
 | Name | Roll Number |
@@ -30,6 +36,7 @@ A comprehensive collection of divide-and-conquer algorithm implementations with 
 
 ## 📋 Table of Contents
 
+- [Live Demo](#-live-demo)
 - [About the Project](#about-the-project)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
