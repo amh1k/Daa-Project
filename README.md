@@ -1,3 +1,13 @@
+---
+title: DAA Algorithm Visualizer
+emoji: 📊
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Design and Analysis of Algorithms - Project 2025
 
 [![C++](https://img.shields.io/badge/C++-11%2B-blue.svg)](https://isocpp.org/)
