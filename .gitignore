@@ -44,5 +44,5 @@ build/
 dist/
 coverage/
 *.zip
+*.rar
 /instructions.md
-
